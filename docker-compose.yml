@@ -1,24 +1,24 @@
-version: "3.8"
-
 services:
   ofelia:
-    name: duckdns-ofelia
+    container_name: duckdns-bot-ofelia
     image: mcuadros/ofelia:latest
     depends_on:
       - bot
-    restart: unless-stopped
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
   bot:
-    name: duckdns-bot
     build: .
-    restart: unless-stopped
+    container_name: duckdns-bot-script
+    command: ['tail', '-f', '/dev/null']
     volumes:
       - type: bind
         source: ./config
-        target: /duckdns-bot/config
+        target: /bom-bot/config
+      - type: bind
+        source: ./logs
+        target: /bom-bot/logs
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.datecron.schedule: "@every 10m"
-      ofelia.job-exec.datecron.command: "curl http://health.hh.home/ping/9cbf734d-20e8-4178-b59a-b7411747839f && python /duckdns-bot/dockdns_bot.py && curl http://health.hh.home/ping/9cbf734d-20e8-4178-b59a-b7411747839f"
+      ofelia.job-exec.datecron.schedule: "* */10 * * *"
+      ofelia.job-exec.datecron.command: "/bin/sh /duckdns-bot/scripts/run.sh"
