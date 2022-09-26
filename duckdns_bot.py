@@ -33,7 +33,8 @@ def main():
         raise e
 
     if config['DUCKDNS_VERBOSE']:
-        logger.debug(f"DuckDNS update: {r_dd.status_code} {r_dd.text.replace('\n',', ')}")
+        r_dd_text = r_dd.text.replace('\n',', ')
+        logger.debug(f"DuckDNS update: {r_dd.status_code} {r_dd_text}")
 
 
 if __name__ == "__main__":
