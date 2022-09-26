@@ -1,4 +1,4 @@
 {
-    "DUCKDNS_UPDATE_URL": "./data/{station_name}-{last_date_time}.json",
+    "DUCKDNS_UPDATE_URL": "https://www.duckdns.org/update",
     "DUCKDNS_VERBOSE": true
 }
