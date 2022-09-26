@@ -26,7 +26,7 @@ def main():
     try:
         r_dd = requests.get(
             url = config["DUCKDNS_UPDATE_URL"], 
-            params = {k: v for k,v in params if v}
+            params = {k: v for k,v in params.items() if v}
         )
     except Exception as e:
         logger.error(f"Error while updating: {e}")
