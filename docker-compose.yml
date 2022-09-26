@@ -14,10 +14,10 @@ services:
     volumes:
       - type: bind
         source: ./config
-        target: /bom-bot/config
+        target: /duckdns-bot/config
       - type: bind
         source: ./logs
-        target: /bom-bot/logs
+        target: /duckdns-bot/logs
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.datecron.schedule: "* */10 * * *"
