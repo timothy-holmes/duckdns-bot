@@ -20,5 +20,5 @@ services:
         target: /duckdns-bot/logs
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.datecron.schedule: "* */10 * * *"
+      ofelia.job-exec.datecron.schedule: "*/10 * * * *"
       ofelia.job-exec.datecron.command: "/bin/sh /duckdns-bot/scripts/run.sh"
