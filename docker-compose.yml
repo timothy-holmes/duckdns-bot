@@ -1,16 +1,14 @@
 services:
   bot:
     image: curlimages/curl
-    env_file:
-    - .env.secrets
     container_name: duckdns
     command: ['tail', '-f', '/dev/null']
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.duckdns_update1.schedule: "10 3-59/5 * * * *"
-      ofelia.job-exec.duckdns_update1.command: "echo url=\"https://www.duckdns.org/update?domains=$DOMAIN1&token=$TOKEN&ip=\" | curl -k -o /var/log/duckdns.log -K -"
+      ofelia.job-exec.duckdns_update1.schedule: "10 13-59/5 * * * *"
+      ofelia.job-exec.duckdns_update1.command: "echo url=\"https://www.duckdns.org/update?domains=${DOMAIN1?err}&token=${TOKEN?err}&ip=\" | curl -k -o /var/log/duckdns.log -K -"
       ofelia.job-exec.duckdns_update2.schedule: "20 13-59/5 * * * *"
-      ofelia.job-exec.duckdns_update2.command: "echo url=\"https://www.duckdns.org/update?domains=$DOMAIN2&token=$TOKEN&ip=\" | curl -k -o /var/log/duckdns.log -K -"
+      ofelia.job-exec.duckdns_update2.command: "echo url=\"https://www.duckdns.org/update?domains=${DOMAIN2?err}&token=${TOKEN?err}&ip=\" | curl -k -o /var/log/duckdns.log -K -"
       ofelia.job-exec.duckdns_update3.schedule: "30 13-59/5 * * * *"
-      ofelia.job-exec.duckdns_update3.command: "echo url=\"https://www.duckdns.org/update?domains=$DOMAIN3&token=$TOKEN&ip=\" | curl -k -o /var/log/duckdns.log -K -"
+      ofelia.job-exec.duckdns_update3.command: "echo url=\"https://www.duckdns.org/update?domains=${DOMAIN3?err}&token=${TOKEN?err}&ip=\" | curl -k -o /var/log/duckdns.log -K -"
     restart: always
