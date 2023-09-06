@@ -10,7 +10,7 @@ Set IP addresses at [duckdns.org](https://duckdns.org/account) to 1.1.1.1 (or wh
 git clone https://github.com/timothy-holmes/duckdns-bot && duckdns-bot
 printf "TOKEN=<duckdns-token>\nDOMAIN1=<duckdns-subdomain>\n" > .env.secrets
 nano docker-compose.yml # remove surplus labels, if necessary
-docker-compose --env_file .env.secrets up -d
+docker-compose --env-file .env.secrets up -d
 ```
 
 Remove surplus labels in docker-compose.yml before starting container.  After the expected time has passed, check for updated IP addresses.
