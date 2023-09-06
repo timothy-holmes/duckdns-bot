@@ -1,24 +1,16 @@
 services:
-  ofelia:
-    container_name: duckdns-bot-ofelia
-    image: mcuadros/ofelia:latest
-    depends_on:
-      - bot
-    command: daemon --docker
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
   bot:
-    build: .
-    container_name: duckdns-bot-script
+    image: curlimages/curl
+    env_file:
+    - .env.secrets
+    container_name: duckdns
     command: ['tail', '-f', '/dev/null']
-    volumes:
-      - type: bind
-        source: ./config
-        target: /duckdns-bot/config
-      - type: bind
-        source: ./logs
-        target: /duckdns-bot/logs
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.datecron.schedule: "0 */11 * * * *"
-      ofelia.job-exec.datecron.command: "/bin/sh /duckdns-bot/scripts/run.sh"
+      ofelia.job-exec.duckdns_update1.schedule: "10 3-59/5 * * * *"
+      ofelia.job-exec.duckdns_update1.command: "echo url=\"https://www.duckdns.org/update?domains=$DOMAIN1&token=$TOKEN&ip=\" | curl -k -o /var/log/duckdns.log -K -"
+      ofelia.job-exec.duckdns_update2.schedule: "20 13-59/5 * * * *"
+      ofelia.job-exec.duckdns_update2.command: "echo url=\"https://www.duckdns.org/update?domains=$DOMAIN2&token=$TOKEN&ip=\" | curl -k -o /var/log/duckdns.log -K -"
+      ofelia.job-exec.duckdns_update3.schedule: "30 13-59/5 * * * *"
+      ofelia.job-exec.duckdns_update3.command: "echo url=\"https://www.duckdns.org/update?domains=$DOMAIN3&token=$TOKEN&ip=\" | curl -k -o /var/log/duckdns.log -K -"
+    restart: always
